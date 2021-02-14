@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<style>
+	</style>
+</head>
+
+<body>
+	<input id="valueInput" type="number" size="3" min="0">
+	<button id="decButton">-</button>
+	<button id="incButton">+</button>
+
+	<script>
+		const countReplicant = nodecg.Replicant('count', { defaultValue: 0 });
+		decButton.onclick = () => {
+			countReplicant.value = countReplicant.value--;
+		};
+		incButton.onclick = () => {
+			countReplicant.value = countReplicant.value++;
+		};
+
+		countReplicant.on('change', (newValue, oldValue) => {
+			valueInput.value = countReplicant.value;
+		});
+		valueInput.onchange = () => {
+			countReplicant.value = valueInput.value;
+		};
+	</script>
+</body>
+
+</html>
