@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 	<style>
 		body {
 			font-family: sans-serif;
@@ -32,29 +33,24 @@
 		const nameReplicant = nodecg.Replicant('count');
 
 		nameReplicant.on('change', (newValue, oldValue) => {
-			let tl = new TimelineLite;
-			tl.to("#counter", {
-				duration: 0.4,
-				opacity: 0,
-				scale: 2,
-				onComplete: () => {
-					counter.innerText = newValue;
-				}
+			const atl = anime.timeline({
+				easing: 'easeOutQuad',
+				duration: 300
 			});
-			tl.set("#counter", {
-						duration: 0.2,
-						opacity: .8,
-						scale:.5,
-						onComplete: () => {
-							counter.innerText = newValue;
-
-						}
-					});
-			tl.to("#counter", {
-				duration: 0.2,
-				opacity: 1,
-				scale: 1
-			});
+			atl
+				.add({
+					targets: '#counter',
+					opacity: [1, 0],
+					scale: [1, 2],
+					complete: () => {
+						counter.innerText = newValue;
+					}
+				})
+				.add({
+					targets: '#counter',
+					opacity: [0.4, 1],
+					scale: [0.2, 1]
+				})
 		});
 	</script>
 </body>
